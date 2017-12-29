@@ -20,7 +20,7 @@ defmodule Catcasts.Mixfile do
   def application do
     [
       mod: {Catcasts.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth, :ueberauth_google, :ex_machina]
+      extra_applications: [:logger, :runtime_tools, :ueberauth, :ueberauth_google]
     ]
   end
 
