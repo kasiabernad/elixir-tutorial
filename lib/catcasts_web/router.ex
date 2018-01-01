@@ -14,15 +14,26 @@ defmodule CatcastsWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug CatcastsWeb.Plugs.RequireAuth
+  end
+
+  scope "/", CatcastsWeb do
+    pipe_through [:browser, :auth]
+
+    resources "/videos", VideoController, only: [:new, :create]
+  end
+
   scope "/", CatcastsWeb do
     pipe_through :browser # Use the default browser stack
 
+    resources "/videos", VideoController, only: [:index, :show, :delete]
     get "/", PageController, :index
   end
 
   scope "/auth", CatcastsWeb do
     pipe_through :browser
-    
+
     get "/signout", AuthController, :delete
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :new
